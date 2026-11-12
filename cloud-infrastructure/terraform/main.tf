@@ -40,7 +40,10 @@ resource "oci_core_security_list" "public" {
   ingress_security_rules {
     protocol = "6"
     source   = var.vcn_cidr
-    tcp_options { min = 22 max = 22 }
+    tcp_options {
+      min = 22
+      max = 22
+    }
   }
   ingress_security_rules {
     protocol = "1"
