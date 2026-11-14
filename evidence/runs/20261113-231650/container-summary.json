@@ -1,0 +1,70 @@
+﻿[
+    {
+        "name":  "nexuscloud-app-a",
+        "state":  "running",
+        "health":  "healthy",
+        "networks":  [
+                         "nexuscloud-site-a"
+                     ],
+        "ports":  [
+                      "127.0.0.1:8081"
+                  ]
+    },
+    {
+        "name":  "nexuscloud-app-b",
+        "state":  "running",
+        "health":  "healthy",
+        "networks":  [
+                         "nexuscloud-site-b"
+                     ],
+        "ports":  [
+                      "127.0.0.1:8082"
+                  ]
+    },
+    {
+        "name":  "nexuscloud-blackbox",
+        "state":  "running",
+        "health":  "not-configured",
+        "networks":  [
+                         "nexuscloud-monitoring",
+                         "nexuscloud-site-a",
+                         "nexuscloud-site-b"
+                     ],
+        "ports":  [
+                      "127.0.0.1:9115"
+                  ]
+    },
+    {
+        "name":  "nexuscloud-node-exporter",
+        "state":  "running",
+        "health":  "not-configured",
+        "networks":  [
+                         "nexuscloud-monitoring"
+                     ],
+        "ports":  [
+
+                  ]
+    },
+    {
+        "name":  "nexuscloud-prometheus",
+        "state":  "running",
+        "health":  "not-configured",
+        "networks":  [
+                         "nexuscloud-monitoring"
+                     ],
+        "ports":  [
+                      "127.0.0.1:9091"
+                  ]
+    },
+    {
+        "name":  "nexuscloud-grafana",
+        "state":  "running",
+        "health":  "not-configured",
+        "networks":  [
+                         "nexuscloud-monitoring"
+                     ],
+        "ports":  [
+                      "127.0.0.1:3001"
+                  ]
+    }
+]

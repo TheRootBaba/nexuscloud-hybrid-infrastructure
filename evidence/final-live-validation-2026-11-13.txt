@@ -1,0 +1,42 @@
+NexusCloud 2.0 — Final live validation snapshot
+Date: 2026-11-13
+Host: Windows + Ubuntu WSL2 + Docker Desktop
+
+Docker Compose
+- PASS: all six services running (app-a, app-b, blackbox, node-exporter, prometheus, grafana).
+- PASS: app-a and app-b report healthy.
+- PASS: docker compose config -q.
+
+HTTP / health checks
+- PASS: http://localhost:8081 (Site A) => HTTP 200.
+- PASS: http://localhost:8082 (Site B) => HTTP 200.
+- PASS: http://localhost:3001/api/health (Grafana) => HTTP 200.
+- PASS: http://localhost:9091/-/healthy (Prometheus) => HTTP 200.
+- PASS: http://localhost:9091/api/v1/targets => HTTP 200.
+
+Prometheus active targets
+- blackbox-site-a: up
+- blackbox-site-b: up
+- node-exporter: up
+- prometheus: up
+
+WireGuard current status
+- PASS: Site A and Site B peers both showed recent latest-handshake timestamps and non-zero transfer counters during live inspection.
+- Full recorded packet/failure/recovery results are in wireguard-validation-2026-11-13.txt.
+
+Repository
+- Clean working tree on main before final documentation additions.
+- .env is ignored and not tracked.
+- Latest combined commit-status lookup returned no status entries; no claim of latest CI success is made.
+- Latest branch commits and push state should be confirmed after the final documentation commit.
+
+Scope notes
+- WireGuard peers are simulated on one WSL2 host.
+- Docker app containers are not attached to the VPN namespace LANs.
+- This is a local learning/portfolio lab, not a production deployment or WAN VPN.
+
+Final repository handover:
+- main: cc4e630 (pushed).
+- nexuscloud-v2: e34c99f (pushed).
+- Working tree returned to main and clean.
+- Combined GitHub status API returned no status entries for either commit; latest CI result remains unverified.

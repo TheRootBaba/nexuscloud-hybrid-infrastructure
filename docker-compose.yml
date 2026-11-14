@@ -1,0 +1,89 @@
+name: nexuscloud
+services:
+  app-a:
+    image: nginx:1.27-alpine
+    container_name: nexuscloud-app-a
+    restart: unless-stopped
+    volumes:
+      - ./site-a:/usr/share/nginx/html:ro
+    networks: [site_a]
+    ports: ["127.0.0.1:8081:80"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/ || exit 1"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+  app-b:
+    image: nginx:1.27-alpine
+    container_name: nexuscloud-app-b
+    restart: unless-stopped
+    volumes:
+      - ./site-b:/usr/share/nginx/html:ro
+    networks: [site_b]
+    ports: ["127.0.0.1:8082:80"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/ || exit 1"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    container_name: nexuscloud-prometheus
+    restart: unless-stopped
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus", "--web.enable-lifecycle"]
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
+    networks: [monitoring]
+    ports: ["127.0.0.1:9091:9090"]
+    depends_on: [blackbox, node-exporter]
+  grafana:
+    image: grafana/grafana:12.1.0
+    container_name: nexuscloud-grafana
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: \${GRAFANA_ADMIN_PASSWORD:?Set GRAFANA_ADMIN_PASSWORD in .env}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks: [monitoring]
+    ports: ["127.0.0.1:3001:3000"]
+    depends_on: [prometheus]
+  blackbox:
+    image: prom/blackbox-exporter:v0.26.0
+    container_name: nexuscloud-blackbox
+    restart: unless-stopped
+    command: ["--config.file=/etc/blackbox/config.yml"]
+    volumes:
+      - ./monitoring/blackbox.yml:/etc/blackbox/config.yml:ro
+    networks: [monitoring, site_a, site_b]
+    ports: ["127.0.0.1:9115:9115"]
+  node-exporter:
+    image: prom/node-exporter:v1.9.1
+    container_name: nexuscloud-node-exporter
+    restart: unless-stopped
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    networks: [monitoring]
+networks:
+  site_a:
+    name: nexuscloud-site-a
+    driver: bridge
+  site_b:
+    name: nexuscloud-site-b
+    driver: bridge
+  monitoring:
+    name: nexuscloud-monitoring
+    driver: bridge
+volumes:
+  prometheus_data:
+  grafana_data:

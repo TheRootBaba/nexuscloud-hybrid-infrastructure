@@ -1,0 +1,32 @@
+**********************
+Windows PowerShell transcript start
+Start time: 20261113230409
+Username: [redacted]
+RunAs User: [redacted]
+Configuration Name:
+Machine: [local host redacted]
+Host Application: PowerShell test execution
+Process ID: [redacted]
+PSVersion: 5.1.26100.9818
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9818
+BuildVersion: 10.0.26100.9818
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Controlled failure test: SiteA
+Expected Prometheus alert: SiteAUnavailable
+Stopping nexuscloud-app-a to trigger the HTTP probe alert.
+PASS: SiteAUnavailable entered firing state while the site was stopped.
+Restoring nexuscloud-app-a.
+**********************
+Windows PowerShell transcript end
+End time: 20261113230540
+**********************
+
+Post-transcript recovery verification:
+PASS: SiteA container is healthy and its HTTP probe has recovered.
+PASS: SiteAUnavailable is no longer firing.
+Process exit code: 0.

@@ -1,0 +1,36 @@
+flowchart TB
+  Browser[Operator browser]
+  subgraph Host["Windows workstation"]
+    subgraph Docker["Docker Desktop / Compose"]
+      subgraph A["Site A bridge"]
+        AppA["app-a / Nginx"]
+      end
+      subgraph B["Site B bridge"]
+        AppB["app-b / Nginx"]
+      end
+      subgraph M["Monitoring bridge"]
+        BB["Blackbox Exporter"]
+        P["Prometheus"]
+        G["Grafana"]
+        N["Node Exporter"]
+      end
+      BB -->|HTTP probe| AppA
+      BB -->|HTTP probe| AppB
+      P -->|scrape| BB
+      P -->|scrape| N
+      G -->|PromQL| P
+    end
+    subgraph WSL["Ubuntu WSL2 - separate VPN simulation"]
+      CA["Site A client"]
+      RA["Site A router / WireGuard"]
+      RB["Site B router / WireGuard"]
+      CB["Site B client"]
+      CA --> RA
+      RA <-->|Encrypted UDP underlay| RB
+      RB --> CB
+    end
+  end
+  Browser -->|8081| AppA
+  Browser -->|8082| AppB
+  Browser -->|3001| G
+  Browser -->|9091| P

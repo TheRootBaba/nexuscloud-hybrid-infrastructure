@@ -1,0 +1,27 @@
+**********************
+Windows PowerShell transcript start
+Start time: 20261114000740
+Username: [redacted]
+RunAs User: [redacted]
+Configuration Name:
+Machine: [local host redacted]
+Host Application: PowerShell alert test
+Process ID: [redacted]
+PSVersion: 5.1.26100.9818
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9818
+BuildVersion: 10.0.26100.9818
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Controlled failure test: SiteA
+Expected Prometheus alert: SiteAUnavailable
+Stopping nexuscloud-app-a to trigger the HTTP probe alert.
+PS>TerminatingError(): "The pipeline has been stopped."
+Safety recovery: restarting nexuscloud-app-a.
+**********************
+Windows PowerShell transcript end
+End time: 20261114000855
+**********************

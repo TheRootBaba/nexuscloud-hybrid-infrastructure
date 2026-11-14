@@ -1,0 +1,4 @@
+﻿"name","type","health","state","query"
+"SiteAUnavailable","alerting","ok","inactive","probe_success{job=""blackbox-site-a""} == 0"
+"SiteBUnavailable","alerting","ok","inactive","probe_success{job=""blackbox-site-b""} == 0"
+"PrometheusTargetMissing","alerting","ok","inactive","up == 0"

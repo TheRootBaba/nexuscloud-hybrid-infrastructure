@@ -1,0 +1,49 @@
+NexusCloud 2.0 Foundation Validation
+Captured: 2026-11-13 21:56 UTC
+
+Docker Compose services: all six containers running.
+- nexuscloud-app-a: healthy
+- nexuscloud-app-b: healthy
+- nexuscloud-blackbox: running
+- nexuscloud-node-exporter: running
+- nexuscloud-prometheus: running
+- nexuscloud-grafana: running
+
+HTTP checks:
+PASS Site A http://127.0.0.1:8081/ — HTTP 200
+PASS Site B http://127.0.0.1:8082/ — HTTP 200
+PASS Prometheus http://127.0.0.1:9091/-/ready — HTTP 200
+PASS Grafana http://127.0.0.1:3001/api/health — HTTP 200
+
+Prometheus scrape targets:
+PASS blackbox-site-a — UP
+PASS blackbox-site-b — UP
+PASS node-exporter — UP
+PASS prometheus — UP
+
+Prometheus alert rules:
+- 1 rule group loaded
+- 3 alert rules loaded
+- Rule health: ok
+
+Grafana:
+- Prometheus datasource provisioned with UID prometheus.
+- NexusCloud Overview dashboard provider loaded successfully.
+- Grafana health endpoint returns HTTP 200.
+- Admin login password needs local operator reset before first use.
+
+WSL2 hybrid readiness:
+- Kernel: 6.18.58.1-microsoft-standard-WSL2
+- WireGuard kernel module metadata: available
+- /dev/net/tun: present
+- wireguard-tools (wg/wg-quick): not installed
+- Docker Desktop WSL integration for Ubuntu: not enabled
+
+Validation script:
+PASS Site A: HTTP 200
+PASS Site B: HTTP 200
+PASS Prometheus: HTTP 200
+PASS Grafana: HTTP 200
+PASS all Prometheus targets are UP
+
+No credentials, .env values, or private keys are included in this evidence file.

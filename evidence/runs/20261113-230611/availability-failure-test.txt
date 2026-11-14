@@ -1,0 +1,32 @@
+**********************
+Windows PowerShell transcript start
+Start time: 20261113230611
+Username: [redacted]
+RunAs User: [redacted]
+Configuration Name:
+Machine: [local host redacted]
+Host Application: PowerShell test execution
+Process ID: [redacted]
+PSVersion: 5.1.26100.9818
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9818
+BuildVersion: 10.0.26100.9818
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Controlled failure test: SiteB
+Expected Prometheus alert: SiteBUnavailable
+Stopping nexuscloud-app-b to trigger the HTTP probe alert.
+PASS: SiteBUnavailable entered firing state while the site was stopped.
+Restoring nexuscloud-app-b.
+**********************
+Windows PowerShell transcript end
+End time: 20261113230722
+**********************
+
+Post-transcript recovery verification:
+PASS: SiteB container is healthy and its HTTP probe has recovered.
+PASS: SiteBUnavailable is no longer firing.
+Process exit code: 0.

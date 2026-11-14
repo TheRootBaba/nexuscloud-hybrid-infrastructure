@@ -1,0 +1,5 @@
+﻿"job","instance","health","lastScrape","lastError"
+"blackbox-site-a","http://app-a:80","up","2026-11-13T23:16:48.123511427Z",""
+"blackbox-site-b","http://app-b:80","up","2026-11-13T23:16:59.644728257Z",""
+"node-exporter","node-exporter:9100","up","2026-11-13T23:16:58.294411922Z",""
+"prometheus","prometheus:9090","up","2026-11-13T23:16:52.089854192Z",""

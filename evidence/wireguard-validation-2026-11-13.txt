@@ -1,0 +1,31 @@
+NexusCloud 2.0 — WireGuard validation
+Date: 2026-11-13
+Environment: Ubuntu WSL2 on Windows; local namespace-based two-site simulation.
+
+Readiness
+- wireguard-tools installed in Ubuntu; wg and wg-quick available.
+- WireGuard kernel module loaded successfully.
+- /dev/net/tun present.
+- iproute2 network namespaces and WireGuard interfaces supported.
+
+Topology
+- Site A LAN/client: 10.77.10.0/24 / 10.77.10.10
+- Site B LAN/client: 10.77.20.0/24 / 10.77.20.10
+- Underlay bridge: 198.18.0.0/24
+- Tunnel: 10.77.0.0/30
+- WireGuard UDP ports: 51820 and 51821
+
+Results
+- PASS: Site A client -> Site B client, 3/3 packets received (0% loss).
+- PASS: Site B client -> Site A client, 3/3 packets received (0% loss).
+- PASS: both peers reported non-zero latest-handshake timestamps.
+- PASS: unapproved 10.77.99.0/24 destination unreachable (no route).
+- PASS: stopping Site B WireGuard interface caused Site A -> Site B ping to fail (100% loss).
+- PASS: restarting Site B interface restored Site A -> Site B traffic (2/2 packets received).
+- PASS: tunnel interface restart completed and all route/handshake tests passed.
+
+Security
+- Private keys and populated configs are stored under /etc/nexuscloud/wireguard/ with root-only permissions.
+- No private key or peer config is stored in the repository.
+- This is a local two-site simulation on one WSL2 host; it is not a remote-site/WAN VPN.
+- Docker app containers are not yet attached to these simulated routed LANs.

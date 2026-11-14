@@ -1,0 +1,24 @@
+== Allowed route: Site A client -> Site B client ==
+PING 10.77.20.10 (10.77.20.10) 56(84) bytes of data.
+64 bytes from 10.77.20.10: icmp_seq=1 ttl=62 time=0.736 ms
+64 bytes from 10.77.20.10: icmp_seq=2 ttl=62 time=1.16 ms
+64 bytes from 10.77.20.10: icmp_seq=3 ttl=62 time=1.94 ms
+
+--- 10.77.20.10 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2016ms
+rtt min/avg/max/mdev = 0.736/1.278/1.936/0.496 ms
+== Return route: Site B client -> Site A client ==
+PING 10.77.10.10 (10.77.10.10) 56(84) bytes of data.
+64 bytes from 10.77.10.10: icmp_seq=1 ttl=62 time=1.04 ms
+64 bytes from 10.77.10.10: icmp_seq=2 ttl=62 time=1.09 ms
+64 bytes from 10.77.10.10: icmp_seq=3 ttl=62 time=1.67 ms
+
+--- 10.77.10.10 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2010ms
+rtt min/avg/max/mdev = 1.040/1.266/1.670/0.285 ms
+== Handshake timestamps ==
+uD3dNakbklGbeHRPOZ0fFdbL2zfBHO6vRMbgGd7NKlo=	1794611728
+BX0kVIpIxoGPKlGdW7RG432nYeFdqlgGQi+Obg6x9yU=	1794611728
+== Denied/unrouted destination ==
+PASS: unapproved subnet is unreachable
+ping: connect: Network is unreachable

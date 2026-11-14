@@ -1,0 +1,8 @@
+.env
+*.log
+*.key
+*.pem
+*.p12
+*.conf.local
+wireguard/
+.DS_Store

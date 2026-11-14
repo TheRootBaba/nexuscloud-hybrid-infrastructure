@@ -1,0 +1,27 @@
+groups:
+  - name: nexuscloud-availability
+    rules:
+      - alert: SiteAUnavailable
+        expr: probe_success{job="blackbox-site-a"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Site A HTTP probe is failing
+          description: The Site A endpoint has failed its HTTP probe for at least one minute.
+      - alert: SiteBUnavailable
+        expr: probe_success{job="blackbox-site-b"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Site B HTTP probe is failing
+          description: The Site B endpoint has failed its HTTP probe for at least one minute.
+      - alert: PrometheusTargetMissing
+        expr: up == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: A Prometheus scrape target is down
+          description: A configured scrape target has been unavailable for at least two minutes.
